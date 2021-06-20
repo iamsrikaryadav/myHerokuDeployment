@@ -90,7 +90,7 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
             var total_data
-            data='https://herokudeploymentapi.herokuapp.com/api/JobPostings/Amazon'
+            data='https://viz-sricharts.herokuapp.com/api/JobPostings/Amazon'
             getData(data)
             function getData(urlString) {
               const dataLoad= new Promise((resolve,reject)=>{
@@ -171,14 +171,14 @@
                 switch (true) {
                   case company!=='' && year==="":
                     console.log(company,"*In company wise switch case*")
-                    getData('https://herokudeploymentapi.herokuapp.com/api/JobPostings/'+company)
+                    getData('https://viz-sricharts.herokuapp.com/api/JobPostings/'+company)
                     // getData('http://192.168.1.4:5000/api/JobPostings/'+year)
                     plotTitle='Frequency distribution of Job Posting in '+company
                     // displayPageNo()
                     break;
                     case company!=='' && year!=='':
                       console.log(company,year,"*In [company and year] wise switch case*")
-                      getData('https://herokudeploymentapi.herokuapp.com/api/JobPostings/'+company+'/'+year)
+                      getData('https://viz-sricharts.herokuapp.com/api/JobPostings/'+company+'/'+year)
                     //   getData('http://192.168.1.4:5000/api/Job-Postings/'+year+'/'+month)
                       plotTitle='Frequency distribution of Job Posting of '+company+' in '+year
                     // displayPageNo()
