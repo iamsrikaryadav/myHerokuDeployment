@@ -1,0 +1,260 @@
+<html>
+    <title>Job Postings Year and Month Wise</title>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            #prev:hover {
+                background-color: #1A73E8;
+            }
+            #main_search {
+                line-height: 10px;
+                margin: 0 50px 0 0;
+                position: absolute;
+                top:25px;
+                right: 335px;
+                font-size: 13px;
+                border: 5px;
+            }
+            #count{
+                position: absolute;
+                top:60px;
+                right: 375px;
+            }
+            #inpt {
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+                height: 25px;
+                line-height: 20px;
+                width: 200px;
+                vertical-align: middle;
+                padding: 5px 10px 5px 10px !important;
+            }
+            #search_button {
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+                height: 25px;
+                padding: 3px;
+                vertical-align: middle;
+            }
+            #dropdown {
+                position: absolute;
+                top:25px;
+                right: 950px;
+                font-weight:bold;
+                font-size: 20px;
+                color: white;
+                border: 5px;
+            }
+            #sub_dropdown {
+                position: absolute;
+                top:25px;
+                right: 710px;
+                font-weight:bold;
+                font-size: 20px;
+                color: Black;
+                border: 5px;
+            }
+            #myList{
+                background-color:#3366ff;
+            }
+            #mySubList{
+                background-color:#ffff00;
+            }
+            option{
+                font-size:18px;
+            }
+
+            * {
+            box-sizing: border-box;
+            }
+
+            body {
+                font: 16px Arial;
+            }
+
+       
+      
+        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            var total_data
+            data='https://herokudeploymentapi.herokuapp.com/api/JobPostings/Amazon'
+            getData(data)
+            function getData(urlString) {
+              const dataLoad= new Promise((resolve,reject)=>{
+                var request = new XMLHttpRequest();
+                request.open('GET',urlString)
+                request.onload= ()=>{
+                  var tot_data = JSON.parse(request.responseText)
+                  console.log(tot_data,"********")
+                  tot_data = tot_data['data']
+                  // var tot_data= toList(tot_data['data'].slice(1,-1))
+                  total_data=tot_data
+                  resolve()
+                }
+                request.send();
+                })
+
+                dataLoad.then(()=>{
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(drawVisualization);
+                })
+            }
+            var current_page = 0
+            var plotTitle= 'Frequency distribution of Job Posting of Amazon'
+
+            function drawVisualization() {
+            // Some raw data (not necessarily accurate)
+                console.log(total_data)
+                var data = google.visualization.arrayToDataTable(total_data);
+                var options = {
+                    title : plotTitle,
+                    titleTextStyle: {
+                        color: 'black',    // any HTML string color ('red', '#cc00cc')
+                        fontName: 'Times New Roman',
+                        fontSize: 24,
+                        bold: true,    // true or false
+                        italic: false,   // true of false
+                    },
+                    hAxis: {
+                    title: 'Year/Month',
+                    textStyle : {
+                            fontSize: 12, // or the number you want
+                            bold: true
+                        },
+                    titleTextStyle: {
+                        bold: true,
+                        fontSize: 18,
+                        italic: false,
+                    },
+                    },
+                    vAxis: {
+                    title: 'Number of Job Postings',
+                    titleTextStyle: {
+                        bold: true,
+                        fontSize: 18,
+                        italic: false,
+                        },
+                    },
+                    seriesType: 'bars',
+                    series: {5: {type: 'line'}} };
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+                displayPageNo()
+            }
+
+
+      function changeThePlot(){
+                var mylist = document.getElementById("myList");
+                var mySubList = document.getElementById("mySubList");
+                // console.log(mylist,"yearoptions",mySubList,"monthoptions")
+                var company=mylist.options[mylist.selectedIndex].value
+                var year = mySubList.options[mySubList.selectedIndex].value
+                console.log(company,"*****")
+                console.log(year,"*****")
+                google.charts.load('current', {'packages':['corechart']});
+                
+
+                switch (true) {
+                  case company!=='' && year==="":
+                    console.log(company,"*In company wise switch case*")
+                    getData('https://herokudeploymentapi.herokuapp.com/api/JobPostings/'+company)
+                    // getData('http://192.168.1.4:5000/api/JobPostings/'+year)
+                    plotTitle='Frequency distribution of Job Posting in '+company
+                    // displayPageNo()
+                    break;
+                    case company!=='' && year!=='':
+                      console.log(company,year,"*In [company and year] wise switch case*")
+                      getData('https://herokudeploymentapi.herokuapp.com/api/JobPostings/'+company+'/'+year)
+                    //   getData('http://192.168.1.4:5000/api/Job-Postings/'+year+'/'+month)
+                      plotTitle='Frequency distribution of Job Posting of '+company+' in '+year
+                    // displayPageNo()
+                    break;
+                }
+                // displayPageNo()
+                google.charts.setOnLoadCallback(drawVisualization);
+            }
+         </script>
+    </head>
+
+    <body>
+        <div id="dropdown">
+            <!-- <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text> -->
+            <select id = "myList"  onchange = "changeThePlot()">
+                <option value='AAP'> AAP </option>
+                <option value='ADP'> ADP </option>
+                <option value='AT&T'> AT&T </option>
+                <option value='Albertsons'> Albertsons </option>
+                <option value='Amazon'> Amazon </option>
+                <option value='AmeriSource Bergen'> AmeriSource Bergen </option>
+                <option value='Anthem'> Anthem </option>
+                <option value='Apple'> Apple </option>
+                <option value='BNY Mellon'> BNY Mellon </option>
+                <option value='Bank of America'> Bank of America </option>
+                <option value='CBRE'> CBRE </option>
+                <option value='Cintas'> Cintas </option>
+                <option value='Cognizant'> Cognizant </option>
+                <option value='DaVita'> DaVita </option>
+                <option value='Danaher'> Danaher </option>
+                <option value='Darden Restaurants'> Darden Restaurants </option>
+                <option value='Exxon Mobil'> Exxon Mobil </option>
+                <option value='Gap'> Gap </option>
+                <option value='General Electronics'> General Electronics </option>
+                <option value='General Motors'> General Motors </option>
+                <option value='Goodyear Tire & Rubber'> Goodyear Tire & Rubber </option>
+                <option value='Jabil'> Jabil </option>
+                <option value='L3 Harris'> L3 Harris </option>
+                <option value='Lockheed Martin'> Lockheed Martin </option>
+                <option value='MC Donalds'> MC Donalds </option>
+                <option value='Marriott International'> Marriott International </option>
+                <option value='McKesson '> McKesson  </option>
+                <option value='Microsoft'> Microsoft </option>
+                <option value='Murphy USA'> Murphy USA </option>
+                <option value='PayPal'> PayPal </option>
+                <option value='Quest Diagnostics'> Quest Diagnostics </option>
+                <option value='Raytheon Technologies'> Raytheon Technologies </option>
+                <option value='Rite Aid'> Rite Aid </option>
+                <option value='Truist FInancials '> Truist FInancials  </option>
+                <option value='UHG'> UHG </option>
+                <option value='Verizon'> Verizon </option>
+                <option value='Wallmart'> Wallmart </option>
+                <option value='Walt Disney'> Walt Disney </option>
+                <option value='Well Forgo'> Well Forgo </option>
+                <option value='XPO Logistics'> XPO Logistics </option>
+                <option value='tenetHealthcare'> tenetHealthcare </option>
+            </select>
+        </div>
+        <div id="sub_dropdown">
+            <!-- <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text> -->
+            <select  id = "mySubList"  onchange = "changeThePlot()">
+              <option value='2021'> 2021 </option>
+              <option value='2020'> 2020 </option>
+              <option value='2019'> 2019 </option>
+              <option value='2018'> 2018 </option>
+              <option value='2017'> 2017 </option>
+              <option value='2016'> 2016 </option>
+              <option value='2015'> 2015 </option>
+              <option value='2014'> 2014</option>
+              <option value=''> Year-Wise</option>
+            </select>
+        </div>
+        <br><br><br><br><br>
+        <center>
+        <div id="chart_div" style="width: 100%; height: 75%; "></div>
+        </center>
+        </div>
+    </body>
+</html>
