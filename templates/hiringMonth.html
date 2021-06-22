@@ -42,8 +42,8 @@
             }
             #dropdown {
                 position: absolute;
-                top:25px;
-                right: 950px;
+                top:60px;
+                right: 900px;
                 font-weight:bold;
                 font-size: 20px;
                 color: white;
@@ -51,12 +51,21 @@
             }
             #sub_dropdown {
                 position: absolute;
-                top:25px;
-                right: 710px;
+                top:60px;
+                right: 760px;
                 font-weight:bold;
                 font-size: 20px;
                 color: white;
                 border: 5px;
+            }
+            #header{
+                position: absolute;
+                top:px;
+                left: 300px;
+                /* text-align: center; */
+                font-weight:bold;
+                text-underline-position: below;
+                color: rgb(0, 0, 0);
             }
             #myList{
                 background-color:#3366ff;
@@ -153,7 +162,7 @@
 
                 var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
                 chart.draw(data, options);
-                displayPageNo()
+                // displayPageNo()
             }
 
 
@@ -251,6 +260,9 @@
               <option value='2014'> 2014</option>
             </select>
         </div>
+        <div id="header">
+            <h2> Visualization of hiring charges with respect to company</h2>
+          </div>
         <br><br><br><br><br>
         <center>
         <div id="chart_div" style="width: 100%; height: 75%; "></div>
