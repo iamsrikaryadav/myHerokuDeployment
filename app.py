@@ -16,7 +16,7 @@ def loadHtml(value):
   print(value)
   return render_template(value)
 
-@app.route("/api/JobPostings/<company>")
+@app.route("/api/JobPostings/<company>/")
 def getCompanyYearDetails(company):
   print("executed")
   with open('source/result.json') as json_file:
