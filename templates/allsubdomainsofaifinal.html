@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Tree Example</title>
+
+    <style>
+	
+	.node {
+		cursor: pointer;
+	}
+
+	.node circle {
+	  fill: #fff;
+	  stroke: steelblue;
+	  stroke-width: 3px;
+	}
+
+	.node text {
+	  font: 12px sans-serif;
+	}
+
+	.link {
+	  fill: none;
+	  stroke: #ccc;
+	  stroke-width: 2px;
+	}
+	
+    </style>
+
+  </head>
+
+  <body>
+
+<!-- load the d3.js library -->	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+	
+<script>
+
+var treeData = [
+{'name': 'AI', 'parent': 'null', 'children': [{'children': [], 'name': 'Artificial Creativity  ', 'parent': 'AI'}, {'children': [], 'name': 'Artificial life  simulation of natural life through the means of computers, robotics, or biochemistry.', 'parent': 'AI'}, {'children': [], 'name': 'Automated planning and scheduling   ', 'parent': 'AI'}, {'children': [], 'name': 'Automated reasoning  ', 'parent': 'AI'}, {'children': [], 'name': 'Automation  ', 'parent': 'AI'}, {'children': [], 'name': 'Automatic target recognition   ', 'parent': 'AI'}, {'children': [], 'name': 'Biologically inspired computing  ', 'parent': 'AI'}, {'children': [{'children': [], 'name': 'Speech recognition  ', 'parent': 'Computer Audition   '}, {'children': [], 'name': 'Speaker recognition  ', 'parent': 'Computer Audition   '}], 'name': 'Computer Audition   ', 'parent': 'AI'}, {'children': [{'children': [], 'name': 'Image processing  ', 'parent': 'Computer vision (outline of computer vision|outline)  '}, {'children': [], 'name': 'Intelligent word recognition   ', 'parent': 'Computer vision (outline of computer vision|outline)  '}, {'children': [], 'name': 'Object recognition  ', 'parent': 'Computer vision (outline of computer vision|outline)  '}, {'children': [{'children': [], 'name': 'Handwriting recognition  ', 'parent': 'Optical mark recognition  '}, {'children': [{'children': [], 'name': 'Automatic number plate recognition  ', 'parent': 'Optical mark recognition  '}], 'name': 'Optical character recognition  ', 'parent': 'Optical mark recognition  '}], 'name': 'Optical mark recognition  ', 'parent': 'Computer vision (outline of computer vision|outline)  '}, {'children': [{'children': [], 'name': 'Silent speech interface  ', 'parent': 'Facial recognition systems  '}], 'name': 'Facial recognition systems  ', 'parent': 'Computer vision (outline of computer vision|outline)  '}], 'name': 'Computer vision (outline of computer vision|outline)  ', 'parent': 'AI'}, {'children': [], 'name': 'Diagnosis (artificial intelligence)  ', 'parent': 'AI'}, {'children': [{'children': [{'children': [], 'name': 'Clinical decision support system  ', 'parent': 'Decision support system   '}], 'name': 'Decision support system   ', 'parent': 'Expert system   '}], 'name': 'Expert system   ', 'parent': 'AI'}, {'children': [{'children': [], 'name': 'Computer game bot  computer replacement for human players.', 'parent': 'Game artificial intelligence  '}, {'children': [{'children': [], 'name': 'Computer chess  ', 'parent': 'Artificial intelligence (video games)|Video game AI  '}, {'children': [], 'name': 'Computer Go  ', 'parent': 'Artificial intelligence (video games)|Video game AI  '}], 'name': 'Artificial intelligence (video games)|Video game AI  ', 'parent': 'Game artificial intelligence  '}, {'children': [], 'name': 'General game playing  ', 'parent': 'Game artificial intelligence  '}, {'children': [], 'name': 'General video game playing  ', 'parent': 'Game artificial intelligence  '}, {'children': [], 'name': 'Game theory  ', 'parent': 'Game artificial intelligence  '}], 'name': 'Game artificial intelligence  ', 'parent': 'AI'}, {'children': [], 'name': 'Hybrid intelligent system  ', 'parent': 'AI'}, {'children': [{'children': [{'children': [], 'name': 'Cognitive architecture  ', 'parent': 'Agent architecture  '}], 'name': 'Agent architecture  ', 'parent': 'Intelligent agent  '}], 'name': 'Intelligent agent  ', 'parent': 'AI'}, {'children': [], 'name': 'Intelligent control  ', 'parent': 'AI'}, {'children': [{'children': [{'children': [], 'name': 'Data mining  ', 'parent': 'Concept mining  '}, {'children': [], 'name': 'Text mining  ', 'parent': 'Concept mining  '}, {'children': [], 'name': 'Process mining  ', 'parent': 'Concept mining  '}], 'name': 'Concept mining  ', 'parent': 'Knowledge management  '}, {'children': [], 'name': 'E-mail spam filtering  ', 'parent': 'Knowledge management  '}, {'children': [{'children': [], 'name': 'Activity recognition  ', 'parent': 'Information extraction  '}, {'children': [{'children': [], 'name': 'Automatic image annotation  ', 'parent': 'Information extraction  '}], 'name': 'Image retrieval  ', 'parent': 'Information extraction  '}, {'children': [{'children': [], 'name': 'Coreference resolution  ', 'parent': 'Information extraction  '}, {'children': [], 'name': 'Named-entity recognition  ', 'parent': 'Information extraction  '}, {'children': [], 'name': 'Relationship extraction  ', 'parent': 'Information extraction  '}, {'children': [], 'name': 'Terminology extraction  ', 'parent': 'Information extraction  '}], 'name': 'Named-entity extraction  ', 'parent': 'Information extraction  '}], 'name': 'Information extraction  ', 'parent': 'Knowledge management  '}, {'children': [], 'name': 'Knowledge representation  ', 'parent': 'Knowledge management  '}, {'children': [], 'name': 'Semantic Web  ', 'parent': 'Knowledge management  '}], 'name': 'Knowledge management  ', 'parent': 'AI'}, {'children': [{'children': [], 'name': 'Constrained Conditional Models   ', 'parent': 'Machine learning  '}, {'children': [], 'name': 'Deep learning   ', 'parent': 'Machine learning  '}, {'children': [], 'name': 'Neural modeling fields   ', 'parent': 'Machine learning  '}], 'name': 'Machine learning  ', 'parent': 'AI'}, {'children': [{'children': [], 'name': 'Chatterbots  ', 'parent': 'Natural language processing (outline of natural language processing|outline)  '}, {'children': [], 'name': 'Language identification  ', 'parent': 'Natural language processing (outline of natural language processing|outline)  '}, {'children': [], 'name': 'Natural-language user interface|Natural language user interface  ', 'parent': 'Natural language processing (outline of natural language processing|outline)  '}, {'children': [], 'name': 'Natural-language understanding|[Natural language understanding   ', 'parent': 'Natural language processing (outline of natural language processing|outline)  '}, {'children': [{'children': [], 'name': 'Statistical semantics  ', 'parent': 'Machine translation  '}], 'name': 'Machine translation  ', 'parent': 'Natural language processing (outline of natural language processing|outline)  '}, {'children': [], 'name': 'Question answering  ', 'parent': 'Natural language processing (outline of natural language processing|outline)  '}, {'children': [], 'name': 'Semantic translation  ', 'parent': 'Natural language processing (outline of natural language processing|outline)  '}], 'name': 'Natural language processing (outline of natural language processing|outline)  ', 'parent': 'AI'}, {'children': [], 'name': 'Nonlinear control  ', 'parent': 'AI'}, {'children': [{'children': [], 'name': 'Optical character recognition  ', 'parent': 'Pattern recognition  '}, {'children': [], 'name': 'Handwriting recognition  ', 'parent': 'Pattern recognition  '}, {'children': [], 'name': 'Speech recognition  ', 'parent': 'Pattern recognition  '}, {'children': [], 'name': 'Facial recognition system|Face recognition  ', 'parent': 'Pattern recognition  '}], 'name': 'Pattern recognition  ', 'parent': 'AI'}, {'children': [{'children': [], 'name': 'Behavior-based robotics  ', 'parent': 'Robotics  '}, {'children': [], 'name': 'Cognitive  ', 'parent': 'Robotics  '}, {'children': [], 'name': 'Cybernetics  ', 'parent': 'Robotics  '}, {'children': [], 'name': 'Developmental robotics  ', 'parent': 'Robotics  '}, {'children': [], 'name': 'Epigenetic robotics  ', 'parent': 'Robotics  '}, {'children': [], 'name': 'Evolutionary robotics  ', 'parent': 'Robotics  '}], 'name': 'Robotics  ', 'parent': 'AI'}, {'children': [], 'name': 'Speech generating device  ', 'parent': 'AI'}, {'children': [], 'name': 'Strategic planning  ', 'parent': 'AI'}, {'children': [], 'name': 'Vehicle infrastructure integration  ', 'parent': 'AI'}, {'children': [], 'name': 'Virtual Intelligence   ', 'parent': 'AI'}, {'children': [], 'name': 'Virtual reality ', 'parent': 'AI'}]}
+
+];
+
+
+// ************** Generate the tree diagram	 *****************
+var margin = {top: 20, right: 120, bottom: 20, left: 100},
+	width = 1760 - margin.right - margin.left,
+	height = 1200 - margin.top - margin.bottom;
+	
+var i = 0,
+	duration = 750,
+	root;
+
+var tree = d3.layout.tree()
+	.size([height, width]);
+
+var diagonal = d3.svg.diagonal()
+	.projection(function(d) { return [d.y, d.x]; });
+
+var svg = d3.select("body").append("svg")
+	.attr("width", width + margin.right + margin.left)
+	.attr("height", height + margin.top + margin.bottom)
+  .append("g")
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+root = treeData[0];
+root.x0 = height / 2;
+root.y0 = 0;
+  
+  function loopex(){
+  var nodess = tree.nodes(root).reverse();
+  console.log(nodess)
+  for (var no of nodess){
+    no._children = no.children;
+    no.children = null;
+  }
+  click(root)
+}
+
+update(root);
+
+d3.select(self.frameElement).style("height", "500px");
+loopex()
+function update(source) {
+
+  // Compute the new tree layout.
+  var nodes = tree.nodes(root).reverse(),
+	  links = tree.links(nodes);
+
+  // Normalize for fixed-depth.
+  nodes.forEach(function(d) { d.y = d.depth * 350; });
+
+  // Update the nodes…
+  var node = svg.selectAll("g.node")
+	  .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+  // Enter any new nodes at the parent's previous position.
+  var nodeEnter = node.enter().append("g")
+	  .attr("class", "node")
+	  .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
+	  .on("click", click);
+
+  nodeEnter.append("circle")
+	  .attr("r", 1e-6)
+	  .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+
+  nodeEnter.append("text")
+	  .attr("x", function(d) { return d.children || d._children ? -13 : 13; })
+	  .attr("dy", ".35em")
+	  .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+	  .text(function(d) { return d.name; })
+	  .style("fill-opacity", 1e-6);
+
+  // Transition nodes to their new position.
+  var nodeUpdate = node.transition()
+	  .duration(duration)
+	  .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+
+  nodeUpdate.select("circle")
+	  .attr("r", 10)
+	  .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+
+  nodeUpdate.select("text")
+	  .style("fill-opacity", 1);
+
+  // Transition exiting nodes to the parent's new position.
+  var nodeExit = node.exit().transition()
+	  .duration(duration)
+	  .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
+	  .remove();
+
+  nodeExit.select("circle")
+	  .attr("r", 1e-6);
+
+  nodeExit.select("text")
+	  .style("fill-opacity", 1e-6);
+
+  // Update the links…
+  var link = svg.selectAll("path.link")
+	  .data(links, function(d) { return d.target.id; });
+
+  // Enter any new links at the parent's previous position.
+  link.enter().insert("path", "g")
+	  .attr("class", "link")
+	  .attr("d", function(d) {
+		var o = {x: source.x0, y: source.y0};
+		return diagonal({source: o, target: o});
+	  });
+
+  // Transition links to their new position.
+  link.transition()
+	  .duration(duration)
+	  .attr("d", diagonal);
+
+  // Transition exiting nodes to the parent's new position.
+  link.exit().transition()
+	  .duration(duration)
+	  .attr("d", function(d) {
+		var o = {x: source.x, y: source.y};
+		return diagonal({source: o, target: o});
+	  })
+	  .remove();
+
+  // Stash the old positions for transition.
+  nodes.forEach(function(d) {
+	d.x0 = d.x;
+	d.y0 = d.y;
+  });
+}
+
+// Toggle children on click.
+function click(d) {
+  if (d.children) {
+	d._children = d.children;
+	d.children = null;
+  } else {
+	d.children = d._children;
+	d._children = null;
+  }
+  update(d);
+}
+
+</script>
+	
+  </body>
+</html>
