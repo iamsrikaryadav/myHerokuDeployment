@@ -3,7 +3,6 @@ import os, json
 import pandas as pd
 from flask_cors import CORS
 from flask_jsonpify import jsonpify
-import matplotlib.pyplot as plt
 from sklearn.metrics import fbeta_score, r2_score
 from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.model_selection import train_test_split
