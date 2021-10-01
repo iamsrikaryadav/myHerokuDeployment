@@ -45,16 +45,17 @@ def getCompanyMonthDetails(company,year):
 @app.route('/<filename>/<predfile>/deeplearning')
 def deeplearning(filename,predfile):
     try:
-        data=pd.read_csv(filename, header=None)
+        # data=pd.read_csv(filename, header=None)
+        data=pd.read_csv('source/ex2data1.txt', header=None)
     except:
-        data=pd.read_excel(filename, header=None)
+        data=pd.read_excel('source/ex2data1.txt', header=None)
     
     print("---------------------------------")
 
     try:
-        pred=pd.read_csv(predfile, header=None)
+        pred=pd.read_csv('source/ex2data1_pred.txt', header=None)
     except:
-        pred=pd.read_excel(predfile, header=None)
+        pred=pd.read_excel('source/ex2data1_pred.txt', header=None)
         
     
     from sklearn.model_selection import train_test_split
