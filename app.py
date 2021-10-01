@@ -46,16 +46,16 @@ def getCompanyMonthDetails(company,year):
 def deeplearning(filename,predfile):
     try:
         # data=pd.read_csv(filename, header=None)
-        data=pd.read_csv('source/ex2data1.txt', header=None)
+        data=pd.read_csv(f'source/{filename}.txt', header=None)
     except:
-        data=pd.read_excel('source/ex2data1.txt', header=None)
+        data=pd.read_excel(f'source/{filename}.txt', header=None)
     
     print("---------------------------------")
 
     try:
-        pred=pd.read_csv('source/ex2data1_pred.txt', header=None)
+        pred=pd.read_csv(f'source/{predfile}.txt', header=None)
     except:
-        pred=pd.read_excel('source/ex2data1_pred.txt', header=None)
+        pred=pd.read_excel(f'source/{predfile}.txt', header=None)
         
     
     from sklearn.model_selection import train_test_split
