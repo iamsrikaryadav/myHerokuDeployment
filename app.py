@@ -2,6 +2,12 @@ from flask import Flask, render_template, jsonify
 import os, json
 import pandas as pd
 from flask_cors import CORS
+from flask_jsonpify import jsonpify
+import matplotlib.pyplot as plt
+from sklearn.metrics import fbeta_score, r2_score
+from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
 app = Flask(__name__)
 CORS(app)
 
@@ -42,7 +48,7 @@ def getCompanyMonthDetails(company,year):
   # true=True
   return jsonify({"data" : data})
 
-@app.route('/<filename>/<predfile>/deeplearning')
+@app.route("/<filename>/<predfile>/deeplearning")
 def deeplearning(filename,predfile):
     try:
         # data=pd.read_csv(filename, header=None)
