@@ -12,13 +12,13 @@
 	}
 
 	.node circle {
-	  fill: #0da20b;
-	  stroke: #000000;
+	  fill: #000000;
+	  stroke: #4FC3F7;
 	  stroke-width: 3px;
 	}
 
 	.node text {
-	  font: 12px sans-serif;
+	  font: 14px sans-serif;
 	}
 
 	.link {
@@ -91,7 +91,7 @@ function update(source) {
 	  links = tree.links(nodes);
 
   // Normalize for fixed-depth.
-  nodes.forEach(function(d) { d.y = d.depth * 250; });
+  nodes.forEach(function(d) { d.y = d.depth * 300; });
 
   // Update the nodes…
   var node = svg.selectAll("g.node")
