@@ -12,8 +12,8 @@
 	}
 
 	.node circle {
-	  fill: #fff;
-	  stroke: steelblue;
+	  fill: #0da20b;
+	  stroke: #000000;
 	  stroke-width: 3px;
 	}
 
@@ -23,7 +23,7 @@
 
 	.link {
 	  fill: none;
-	  stroke: #ccc;
+	  stroke: #ffea32;
 	  stroke-width: 2px;
 	}
 	
@@ -105,7 +105,7 @@ function update(source) {
 
   nodeEnter.append("circle")
 	  .attr("r", 1e-6)
-	  .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+	  .style("fill", function(d) { return d._children ? "lightsteelblue" : "#0da20b"; });
 
   nodeEnter.append("text")
 	  .attr("x", function(d) { return d.children || d._children ? -13 : 13; })
